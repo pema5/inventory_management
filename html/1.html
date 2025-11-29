@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Shop - Home Page</title>
+    <link rel="stylesheet" href="landing.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap JavaScript Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
+    <style>
+     .marquee {
+        color:white;
+     }
+    </style>
+</head>
+<body>
+  <div class="div">
+    <marquee class="marquee">Welcome to Smart Store</marquee>
+    <p class="location">Kapan, Kathmandu</p>
+  </div>
+
+  <div id="navbar" class="navbar">
+    <a class="home" href="#home-section">Home</a>
+    <a class="news" href="#news-section">News</a>
+    <a class="contact" href="#contact-section">Contact</a>
+    <input type="text" placeholder="Search" class="search">
+    
+    <!-- Login Dropdown -->
+    <div class="dropdown">
+      <button class="login dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Login
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="login.html" target="_blank">Admin</a></li>
+        <li><a class="dropdown-item" href="EmployeeLogin.html" target="_blank">Employee</a></li>
+      </ul>
+    </div>
+    
+    <a class="register" href="registrationformForEmployee.html" target="_blank">Register</a>
+  </div>
+
+  <!-- Home Section -->
+  <div id="home-section" class="content-section">
+    <h2>Welcome to our Smart Shop!</h2>
+    <p>Find the best products at our online store. We offer a wide range of products, including electronics, groceries, and more.</p>
+  </div>
+
+  <!-- News Section -->
+  <div id="news-section" class="content-section">
+    <h2>Latest News</h2>
+    <ul>
+      <li>New shipment of fresh produce arrives this week!</li>
+      <li>Summer sale starts on July 1st - Don't miss out!</li>
+    </ul>
+  </div>
+
+  <!-- Contact Section -->
+  <div id="contact-section" class="content-section">
+    <h2>Contact Us</h2>
+    <p>If you have any questions or inquiries, feel free to reach out to us:</p>
+    <p>Email: support@smartshop.com</p>
+    <p>Phone: +977 326 224 986</p>
+  </div>
+
+  <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="store.jpg" class="d-block w-100" alt="store1">
+      </div>
+      <div class="carousel-item">
+        <img src="store2.jpg" class="d-block w-100" alt="store2">
+      </div>
+      <div class="carousel-item">
+        <img src="store3.jpg" class="d-block w-100" alt="store3">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+</body>
+</html>
