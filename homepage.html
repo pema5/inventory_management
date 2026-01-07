@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Homepage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #8A2BE2;
+            color: white;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 10px;
+            background: #5A189A;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 10px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .news-page {
+            background-color: #5A189A;
+        }
+
+        .news-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .news-container img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            color: #5A189A;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="news.html" target="_blank">News</a></li>
+        </ul>
+    </nav>
+
+    <h1>Welcome to Our Store</h1>
+    <p>Click on the 'News' tab to see the latest updates!</p>
+
+    <div id="news-section" class="news-page" style="display: none;">
+        <div class="news-container">
+            <img src="store.jpg" alt="News Image">
+            <h2>Latest News</h2>
+            <ul>
+                <li>New shipment of fresh produce arrives this week!</li>
+                <li>Summer sale starts on July 1st - Don't miss out!</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector("a").addEventListener("click", function(event) {
+            event.preventDefault();
+            window.open("news.html", "_blank");
+        });
+    </script>
+
+</body>
+</html>
