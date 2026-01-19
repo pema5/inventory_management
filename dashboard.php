@@ -17,6 +17,7 @@ html, body {
 body {
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
 }
 
 /* TOP BAR */
@@ -104,11 +105,11 @@ body {
     cursor: pointer;
 }
 
-/* IMAGE SECTION (NO BLUR) */
+/* HERO IMAGE */
 .hero-section {
-    flex: 1;
     width: 100%;
-    background-image: url('super.jpg');
+    height: calc(100vh - 140px);  /* full screen minus top bar + navbar */
+    background-image: url('super.jpg'); /* OR images/super.jpg */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -120,6 +121,7 @@ footer {
     padding: 10px 0;
     font-size: 14px;
     color: black;
+    background: rgba(210, 180, 140, 0.45);
 }
 </style>
 </head>
@@ -149,9 +151,7 @@ footer {
         <div class="dropdown">
             <a href="#">Register</a>
             <div class="dropdown-content">
-                <a href="#">Admin</a>
-                <a href="#">Employee</a>
-                <a href="#">Customer</a>
+                <a href="Customerregister.php">Customer</a>
             </div>
         </div>
     </div>
@@ -162,7 +162,7 @@ footer {
     </div>
 </div>
 
-<!-- SHARP IMAGE BELOW NAVBAR -->
+<!-- HERO IMAGE -->
 <div class="hero-section"></div>
 
 <footer>

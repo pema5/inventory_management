@@ -1,65 +1,49 @@
-delete.php
 <?php
-$servername="localhost";
-$username="root";
-$password="root";
-$dbname="my_database";
-$conn=new mysqli($servername,$username,$password,$dbname);
-if($conn->connect_error){
-    die("connection failed:".$conn->connect_error);
+$servername = "localhost";
+$username = "root";
+$password = "root";
+$dbname = "my_database";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
-if($_SERVER['REQUEST_METHOD']=='POST'){
-$productCode = $_POST['productcode'];
-$productName= $_POST['productname'];
-$productType= $_POST['producttype'];
-$productUnit= $_POST['productunit'];
-$salesRate= $_POST['salesrate'];
 
+if (!isset($_GET['code'])) {
+    die("Invalid request");
+}
 
-    if (isset($_FILES['uploadphoto']) && $_FILES['uploadphoto']['error'] == 0) {
-        $targetDir = "uploads/";
-        $photo = basename($_FILES["uploadphoto"]["name"]);
-        $targetFilePath = $targetDir . $photo;
-        move_uploaded_file($_FILES["uploadphoto"]["tmp_name"], $targetFilePath);
-    } else {
-        $photo = NULL;
+$productCode = $_GET['code'];
+
+/* 1️⃣ Get image filename */
+$stmt = $conn->prepare(
+    "SELECT uploadphoto FROM productentry WHERE productcode = ?"
+);
+$stmt->bind_param("s", $productCode);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($row = $result->fetch_assoc()) {
+    $photo = $row['uploadphoto'];
+
+    /* 2️⃣ Delete image file */
+    if (!empty($photo) && file_exists("uploads/" . $photo)) {
+        unlink("uploads/" . $photo);
     }
 
-   
-    $checkSql = "SELECT * FROM productentry WHERE product_code = '$productCode'";
-    $result = $conn->query($checkSql);
-
-    if ($result->num_rows > 0) {
-    
-        $updateSql = "UPDATE productentry 
-                      SET product_name = '$productName', 
-                          product_type = '$productType', 
-                          product_unit = '$productUnit', 
-                          sales_rate = '$salesRate'";
-        
-       
-        if ($photo) {
-            $updateSql .= ", image = '$photo'";
-        }
-
-        $updateSql .= " WHERE product_code = '$productCode'";
-
-        if ($conn->query($updateSql) === TRUE) {
-            echo "Record updated successfully!";
-        } else {
-            echo "Error updating record: " . $conn->error;
-        }
-    } else {
-        // If product_code does not exist, insert a new record
-        $insertSql = "INSERT INTO productentry (product_code, product_name, product_type, product_unit, sales_rate, image)
-                      VALUES ('$productCode', '$productName', '$productType', '$productUnit', '$salesRate', '$photo')";
-
-        if ($conn->query($insertSql) === TRUE) {
-            echo "New record created successfully!";
-        } else {
-            echo "Error: " . $insertSql . "<br>" . $conn->error;
-        }
-    }
+    /* 3️⃣ Delete database record */
+    $deleteStmt = $conn->prepare(
+        "DELETE FROM productentry WHERE productcode = ?"
+    );
+    $deleteStmt->bind_param("s", $productCode);
+    $deleteStmt->execute();
+    $deleteStmt->close();
 }
-header("Location:ViewProduct.php");
+
+$stmt->close();
+$conn->close();
+
+/* 4️⃣ Redirect ONCE */
+header("Location: viewProduct.php");
+exit();
 ?>

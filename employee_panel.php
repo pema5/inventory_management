@@ -1,9 +1,11 @@
-<?php 
+<?php
 session_start();
+
 if (!isset($_SESSION['username'])) {
-    echo "Illegal access";
+    header("Location: login.php");
     exit();
 }
+
 
 $servername = "localhost";
 $username = "root";
@@ -13,21 +15,21 @@ $dbname = "my_database";
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 if (!$conn) die("Connection failed: " . mysqli_connect_error());
 
-$sql = "SELECT product_name, product_unit, sales_rate FROM productentry";
+$sql = "SELECT productname, productunit, salesrate FROM productentry";
 $result = mysqli_query($conn, $sql);
 
 $total_stock = $total_stock_value = 0;
 $products = [];
 
 while ($row = mysqli_fetch_assoc($result)) {
-    $stock_value = $row["product_unit"] * $row["sales_rate"];
+    $stock_value = $row["productunit"] * $row["salesrate"];
     $products[] = [
-        "name" => $row["product_name"],
-        "stock" => $row["product_unit"],
-        "price" => $row["sales_rate"],
+        "name" => $row["productname"],
+        "stock" => $row["productunit"],
+        "price" => $row["salesrate"],
         "value" => $stock_value
     ];
-    $total_stock += $row["product_unit"];
+    $total_stock += $row["productunit"];
     $total_stock_value += $stock_value;
 }
 

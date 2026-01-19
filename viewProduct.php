@@ -1,8 +1,8 @@
-<?php
+ <?php
 include "db.php"; // your database connection
 
 // Fetch all products
-$result = mysqli_query($conn, "SELECT * FROM products");
+$result = mysqli_query($conn, "SELECT * FROM productentry");
 if(!$result){
     die("Query failed: " . mysqli_error($conn));
 }

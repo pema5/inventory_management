@@ -57,7 +57,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT id, customer_name, phone_number, product_name, product_id, quantity, unit, date FROM goodsout";
+$sql = "SELECT goodsout_id, customer_name, customer_phone, productcode, quantity, date_time FROM goodsout";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {

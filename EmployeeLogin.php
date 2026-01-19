@@ -4,103 +4,122 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Login</title>
+
     <style>
         body {
-            background-color: blueviolet;
-            color: #fff;
-            font-family: Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Segoe UI", Arial, sans-serif;
+
+            /* CLEAR background image */
+            background-image: url("super.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
+        /* Light overlay */
+        .overlay {
+            min-height: 100vh;
+            background: rgba(255, 255, 255, 0.15);
+            padding-top: 60px;
+        }
+
+        /* Login card */
         .form {
-            max-width: 400px;
-            margin: 100px auto;
+            max-width: 320px;
+            margin: 70px auto;
             padding: 20px;
-            background-color: #5f3fb0;
-            border-radius: 8px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            background: lightblue;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+            color: #000;
         }
 
         .fieldset {
-            border: 2px solid #fff;
-            padding: 20px;
+            border: none;
+            padding: 0;
         }
 
         .legend {
-            color: #fff;
-            font-size: 1.5rem;
             text-align: center;
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
         }
 
         .employeePic {
             display: block;
-            margin: 0 auto 20px;
-            width: 80px;
-            height: 80px;
+            margin: 0 auto 15px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            border: 2px solid #fff;
+            border: 2px solid #5f3fb0;
+            background: #fff;
         }
 
-        .label {
-            color: #fff;
+        label {
             display: block;
-            margin-bottom: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #222;
         }
 
-        input[type="text"], input[type="password"] {
-            width: calc(100% - 10px);
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 2px solid #fff;
-            background-color: #7a54d9;
-            color: #fff;
-            border-radius: 5px;
+        input {
+            width: 100%;
+            padding: 9px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1.5px solid #ccc;
+            background: #fff;
+            color: #000;
         }
 
-        input[type="text"]:focus, input[type="password"]:focus {
-            border-color: #ddd;
+        input:focus {
+            outline: none;
+            border-color: #5f3fb0;
         }
 
         .submit {
-            display: block;
             width: 100%;
-            padding: 10px;
-            background-color: #fff;
-            color: blueviolet;
+            padding: 9px;
+            background: #5f3fb0;
+            color: #fff;
             border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            border-radius: 6px;
             font-weight: bold;
-            font-size: 1rem;
+            cursor: pointer;
         }
 
         .submit:hover {
-            background-color: #ddd;
+            background: #4a2ea0;
         }
     </style>
 </head>
+
 <body>
 
-    <form class="form" action="employee_panel.php" method="post" alignment="center">
+<div class="overlay">
+
+    <form class="form" action="employee_panel.php" method="post">
         <fieldset class="fieldset">
-            <legend class="legend">
-               Employee Login
-            </legend>
-            <div>
-                <img class="employeePic" src="employee_registration.jpg" alt="Employee">
-            </div>
-            <div>
-                <label class="label"><strong>Employee ID</strong></label><br>
-                <input type="text" id="employee_id" name="employee_id">
-            </div>
-            <div> 
-                <label class="label"><strong>Password</strong></label><br>
-                <input type="password" name="password" id="password">
-            </div>
-            <div>
-                <button class="submit" name="submit">Login</button>
-            </div>
+            <legend class="legend">Employee Login</legend>
+
+            <img src="employee_registration.jpg" class="employeePic" alt="Employee">
+
+            <label>Employee ID</label>
+            <input type="text" name="employee_id" required>
+
+            <label>Password</label>
+            <input type="password" name="password" required>
+
+            <button class="submit" name="submit">Login</button>
         </fieldset>
     </form>
+
+</div>
 
 </body>
 </html>
