@@ -1,67 +1,81 @@
 <?php
-$hostname = "localhost";
-$username = "root";
-$password = "root";
-$dbname = "my_database";  
-
-// Creating connection
-$conn = new mysqli($hostname, $username, $password, $dbname);
-
-// Checking for connection error
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Check if form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!empty($_POST['customer_name']) && !empty($_POST['customer_no']) && !empty($_POST['product_name']) && 
-        !empty($_POST['product_id']) && !empty($_POST['product_quantity']) && !empty($_POST['product_unit']) && !empty($_POST['date'])) {
-        
-        // Assign form values to variables
-        $customer_name = $_POST['customer_name'];
-        $phone_number = $_POST['customer_no'];
-        $product_name = $_POST['product_name'];
-        $product_id = $_POST['product_id'];
-        $quantity = (int)$_POST['product_quantity'];
-        $unit = $_POST['product_unit'];
-        $date = $_POST['date'];
-
-        // Check if product exists and get current stock
-        $stmt = $conn->prepare("SELECT product_unit FROM productentry WHERE product_code = ?");
-        $stmt->bind_param("s", $product_id);
-        $stmt->execute();
-        $stmt->bind_result($current_stock);
-        $stmt->fetch();
-        $stmt->close();
-
-        if ($current_stock !== null) {
-            if ($current_stock >= $quantity) {
-                // Insert into GoodsOut table
-                $stmt = $conn->prepare("INSERT INTO Goodsout (customer_name, phone_number, product_name, product_id, quantity, unit, date) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                $stmt->bind_param("ssssiss", $customer_name, $phone_number, $product_name, $product_id, $quantity, $unit, $date);
-                $stmt->execute();
-                $stmt->close();
-
-                // Update stock in productentry table
-                $new_stock = $current_stock - $quantity;
-                $stmt = $conn->prepare("UPDATE productentry SET product_unit = ? WHERE product_code = ?");
-                $stmt->bind_param("is", $new_stock, $product_id);
-                $stmt->execute();
-                $stmt->close();
-
-                // Redirect to goodsout.php to display updated stock and transactions
-                header("Location: ViewProduct.php");
-                exit();
-            } else {
-                echo "Error: Insufficient stock.";
-            }
-        } else {
-            echo "Error: Product not found.";
-        }
-    } else {
-        echo "Please fill out all required fields.";
-    }
-}   
-
-$conn->close();
+include "db.php";
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Goods Out</title>
+<style>
+body {font-family: Arial; background:#f0f2f5; display:flex; justify-content:center; align-items:center; height:100vh;}
+.container {background:white; padding:30px; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,0.2); width:420px;}
+h2 {text-align:center; color:#4b0082;}
+label {display:block; margin-top:15px;}
+input, select {width:100%; padding:10px; margin-top:5px; border-radius:6px; border:1px solid #aaa;}
+input[readonly], select:disabled {background:#eee;}
+button {width:100%; padding:12px; margin-top:20px; background:#6a5acd; color:white; border:none; border-radius:8px; cursor:pointer;}
+button:hover {background:#483d8b;}
+.message {text-align:center; margin-bottom:10px; color:green;}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Goods Out Form</h2>
+
+<?php if (isset($_GET['success'])): ?>
+    <div class="message">Goods Out successful! Stock updated and recorded.</div>
+<?php endif; ?>
+
+<form method="POST" action="save_goodsout.php">
+
+    <label>Customer Name</label>
+    <input type="text" name="customer_name" required>
+
+    <label>Customer Phone</label>
+    <input type="text" name="customer_phone" required>
+
+    <label>Date & Time</label>
+    <input type="text" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly name="date_time">
+
+    <label>Product Code</label>
+    <input type="number" name="productcode" id="code" onkeyup="fetchProduct()" required>
+
+    <label>Product Name</label>
+    <select id="name" disabled></select>
+
+    <label>Product Type</label>
+    <select id="type" disabled></select>
+
+    <label>Sales Rate</label>
+    <select id="rate" disabled></select>
+
+    <label>Quantity to Remove</label>
+    <input type="number" name="productunit" min="1" required>
+
+    <button type="submit">Goods Out</button>
+</form>
+</div>
+
+<script>
+function fetchProduct() {
+    let code = document.getElementById("code").value;
+    if (code === "") return;
+
+    fetch("fetch_product.php?code=" + code)
+    .then(response => response.json())
+    .then(data => {
+        if (data) {
+            document.getElementById("name").innerHTML = `<option>${data.productname}</option>`;
+            document.getElementById("type").innerHTML = `<option>${data.producttype}</option>`;
+            document.getElementById("rate").innerHTML = `<option>${data.salesrate}</option>`;
+        } else {
+            document.getElementById("name").innerHTML = `<option>Not found</option>`;
+            document.getElementById("type").innerHTML = `<option>Not found</option>`;
+            document.getElementById("rate").innerHTML = `<option>0</option>`;
+        }
+    });
+}
+</script>
+</body>
+</html>
