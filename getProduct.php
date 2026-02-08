@@ -13,7 +13,7 @@ if(!isset($_GET['code']) || empty($_GET['code'])){
 }
 
 $code = $conn->real_escape_string($_GET['code']);
-$res = $conn->query("SELECT product_name, product_unit, sales_rate FROM product_entry WHERE product_code='$code'");
+$res = $conn->query("SELECT productname, productunit, salesrate FROM productentry WHERE productcode='$code'");
 
 if($res->num_rows > 0){
     $data = $res->fetch_assoc();

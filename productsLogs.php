@@ -67,10 +67,8 @@ if ($result->num_rows > 0) {
                     <th>ID</th>
                     <th>Customer Name</th>
                     <th>Phone Number</th>
-                    <th>Product Name</th>
                     <th>Product ID</th>
                     <th>Quantity</th>
-                    <th>Unit</th>
                     <th>Date</th>
                 </tr>
             </thead>
@@ -78,14 +76,12 @@ if ($result->num_rows > 0) {
 
     while($row = $result->fetch_assoc()) {
         echo "<tr>
-                <td>" . $row["id"] . "</td>
+                <td>" . $row["goodsout_id"] . "</td>
                 <td>" . $row["customer_name"] . "</td>
-                <td>" . $row["phone_number"] . "</td>
-                <td>" . $row["product_name"] . "</td>
-                <td>" . $row["product_id"] . "</td>
+                <td>" . $row["customer_phone"] . "</td>
+                <td>" . $row["productcode"] . "</td>
                 <td>" . $row["quantity"] . "</td>
-                <td>" . $row["unit"] . "</td>
-                <td>" . $row["date"] . "</td>
+                <td>" . $row["date_time"] . "</td>
               </tr>";
     }
 
