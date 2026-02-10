@@ -1,0 +1,78 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+<title>Goods Out</title>
+
+<style>
+body { font-family: Arial; background:#f4f4f4; }
+.box {
+    width:400px;
+    margin:50px auto;
+    background:white;
+    padding:20px;
+}
+input, button {
+    width:100%;
+    padding:8px;
+    margin:8px 0;
+}
+</style>
+
+<script>
+function fetchProduct() {
+    let pid = document.getElementById("product_id").value;
+
+    if (pid === "") {
+        document.getElementById("product_name").value = "";
+        document.getElementById("product_unit").value = "";
+        document.getElementById("product_quantity").max = "";
+        return;
+    }
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "fetch_product.php?product_id=" + pid, true);
+    xhr.onload = function () {
+        let data = JSON.parse(this.responseText);
+
+        if (data.status === "found") {
+            document.getElementById("product_name").value = data.product_name;
+            document.getElementById("product_unit").value = data.product_unit;
+            document.getElementById("product_quantity").max = data.product_stock;
+        }
+    };
+    xhr.send();
+}
+</script>
+</head>
+
+<body>
+
+<div class="box">
+<h2>Goods Out</h2>
+
+<form method="POST" action="save_goodsout.php">
+
+    Product ID:
+    <input type="text" id="product_id" name="product_id"
+           onkeyup="fetchProduct()" required>
+
+    Product Name:
+    <input type="text" id="product_name" readonly>
+
+    Quantity:
+    <input type="number" id="product_quantity"
+           name="product_quantity" min="1" required>
+
+    Unit:
+    <input type="text" id="product_unit" readonly>
+
+    Date:
+    <input type="date" name="date" required>
+
+    <button type="submit">Goods Out</button>
+
+</form>
+</div>
+
+</body>
+</html> -->
